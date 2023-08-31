@@ -4,22 +4,15 @@ const connectionCheck = function  (data , from , to){
     let fromNode = data.find(node => node.id === from)
     if (fromNode.parent.length !==0) {
         console.log(from , 'has parent '+ fromNode.parent)
-        for (let i = 0; i < fromNode.parent.length; i++) {
-            if (fromNode.parent[i] == to) {
-                console.log(from,'has loop')
+
+        return fromNode.parent.map(from => {
+            if (from == to) {
+                console.log(from,'has loop inner')
                 return false
             }else {
-                return connectionCheck(data, fromNode.parent[i], to)
+                return connectionCheck(data, from, to)
             }
-        }
-        // return fromNode.parent.map(from => {
-        //     if (from == to) {
-        //         console.log(from,'has loop inner')
-        //         return false
-        //     }else {
-        //         return connectionCheck(data, from, to)
-        //     }
-        // })
+        })
     }else{
         if (from == to) {
             console.log(from,'has loop')
